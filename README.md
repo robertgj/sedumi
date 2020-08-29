@@ -13,3 +13,26 @@ You are welcome to submit bug reports on the [GitHub issue page](https://github.
 This version of SeDuMi is distributed under the [GNU General Public License 2.0](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html).
 
 
+!!!WARNING!!!
+
+As of 29th August SeDuMi does not compile on my Fedora 32 system with openblas-0.3.10-4.fc32.x86_64:
+```
+------------------------------------------------------------------------
+SeDuMi installation script
+   Directory: /usr/local/octave-5.2.0/share/octave/5.2.0-robj/site/m/SeDuMi
+   Octave 5.2.0-robj on x86_64-pc-linux-gnu
+---------------------------------------------------------------------------
+Looking for existing binaries...none found; building...
+Attempting to recompile the SeDuMi binaries:
+Template: mex -O2 -DOCTAVE -Wall -I/usr/include/openblas %s 
+   bwblkslv.mex:   bwblkslv.c sdmauxFill.c sdmauxRdot.c
+In file included from blksdp.h:41,
+                 from bwblkslv.c:45:
+/usr/include/openblas/f77blas.h:476:5: error: unknown type name ‘bfloat16’; did you mean ‘_Float16’?
+  476 |     bfloat16 *, blasint *, bfloat16 *, blasint *, float *, float *, blasint *);
+      |     ^~~~~~~~
+      |     _Float16
+```
+bfloat16 is a  Brain floating-point format that is defined for
+GCC ARM compilers. My solution was to downgrade to the
+openblas-0.3.9-2.fc32.x86_64 package.
